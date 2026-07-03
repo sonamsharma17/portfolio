@@ -170,7 +170,7 @@ export default function ContactTerminal() {
   }, [form]);
 
   // TO RECEIVE REAL EMAILS: Get a free Access Key from https://web3forms.com and paste it here:
-  const WEB3FORMS_ACCESS_KEY = "6e660f52-c962-4689-b4aa-5e0972b65fb5";
+  const WEB3FORMS_ACCESS_KEY: string = "235dd834-cd94-4e3e-8467-c131a20b9f28";
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -190,7 +190,7 @@ export default function ContactTerminal() {
         });
       }
 
-      if (WEB3FORMS_ACCESS_KEY === "235dd834-cd94-4e3e-8467-c131a20b9f28") {
+      if (WEB3FORMS_ACCESS_KEY === "YOUR_ACCESS_KEY_HERE") {
         // Fallback simulation if the key is not set yet
         setTimeout(() => {
           setIsSending(false);
