@@ -522,7 +522,7 @@ export default function ContactTerminal() {
           {/* === RIGHT: Social Links + Journey Stats === */}
           <div className="space-y-8">
             {/* Social Platform Boards */}
-            <div className="social-boards-container space-y-3">
+            <div className="social-boards-container">
               <h3
                 className="text-xs font-mono tracking-[0.2em] uppercase mb-4"
                 style={{ color: "rgba(232,93,58,0.6)" }}
@@ -530,59 +530,61 @@ export default function ContactTerminal() {
                 Platform Directory
               </h3>
 
-              {socialLinks.map((social) => (
-                <a
-                  key={social.platform}
-                  href={social.url}
-                  onClick={(e) => {
-                    if (social.platform === "Email") {
-                      // Copy to clipboard for easy backup
-                      navigator.clipboard.writeText(personalInfo.email);
-                      setEmailCopied(true);
-                      setTimeout(() => setEmailCopied(false), 3000);
-                    }
-                  }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-board flex items-center gap-4 p-4 rounded-lg transition-[border-color,box-shadow,background-color] duration-300 group cursor-pointer"
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = `${social.color}40`;
-                    (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 16px ${social.color}15`;
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
-                    (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                  }}
-                >
-                  <span className="text-2xl">{social.icon}</span>
-                  <div className="flex-1">
-                    <p
-                      className="font-mono font-semibold text-sm"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      {social.platform}
-                    </p>
-                    <p
-                      className="text-[10px] font-mono transition-colors duration-300"
-                      style={{ color: emailCopied && social.platform === "Email" ? "#10B981" : "var(--text-muted)" }}
-                    >
-                      {emailCopied && social.platform === "Email"
-                        ? "Copied to clipboard!"
-                        : social.label}
-                    </p>
-                  </div>
-                  <span
-                    className="text-xs font-mono transition-transform duration-300 group-hover:translate-x-1"
-                    style={{ color: social.color }}
+              <div className="flex flex-row gap-3 md:flex-col md:space-y-3">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.platform}
+                    href={social.url}
+                    onClick={(e) => {
+                      if (social.platform === "Email") {
+                        // Copy to clipboard for easy backup
+                        navigator.clipboard.writeText(personalInfo.email);
+                        setEmailCopied(true);
+                        setTimeout(() => setEmailCopied(false), 3000);
+                      }
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-board flex flex-col md:flex-row items-center text-center md:text-left gap-1.5 md:gap-4 p-2.5 md:p-4 rounded-lg transition-[border-color,box-shadow,background-color] duration-300 group cursor-pointer flex-1"
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.borderColor = `${social.color}40`;
+                      (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 16px ${social.color}15`;
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
+                      (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                    }}
                   >
-                    →
-                  </span>
-                </a>
-              ))}
+                    <span className="text-xl md:text-2xl [&_svg]:w-5 [&_svg]:h-5 md:[&_svg]:w-6 md:[&_svg]:h-6">{social.icon}</span>
+                    <div className="flex-1">
+                      <p
+                        className="font-mono font-semibold text-xs md:text-sm"
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        {social.platform}
+                      </p>
+                      <p
+                        className="hidden md:block text-[10px] font-mono transition-colors duration-300"
+                        style={{ color: emailCopied && social.platform === "Email" ? "#10B981" : "var(--text-muted)" }}
+                      >
+                        {emailCopied && social.platform === "Email"
+                          ? "Copied to clipboard!"
+                          : social.label}
+                      </p>
+                    </div>
+                    <span
+                      className="hidden md:inline text-xs font-mono transition-transform duration-300 group-hover:translate-x-1"
+                      style={{ color: social.color }}
+                    >
+                      →
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Journey Completion Stats */}

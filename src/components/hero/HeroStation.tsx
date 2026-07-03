@@ -860,19 +860,19 @@ export default function HeroStation() {
 
       {/* ============ STATION CLOCK ============ */}
       <div
-        className="absolute top-24 right-8 md:right-16 z-30"
+        className="absolute top-4 left-4 md:top-24 md:left-auto md:right-16 z-30"
         style={{
           transform: `translate(${mousePos.x * -5}px, ${mousePos.y * -2}px)`,
         }}
       >
         <div
-          className="glass rounded-xl px-4 py-2 text-center"
+          className="glass rounded-lg md:rounded-xl px-2.5 py-1.5 md:px-4 md:py-2 text-center"
         >
-          <div className="text-xs uppercase tracking-widest mb-1" style={{ color: "var(--text-muted)" }}>
+          <div className="text-[10px] md:text-xs uppercase tracking-widest mb-0.5 md:mb-1" style={{ color: "var(--text-muted)" }}>
             Station Time
           </div>
           <div
-            className="font-mono text-xl md:text-2xl font-bold tabular-nums"
+            className="font-mono text-sm sm:text-base md:text-2xl font-bold tabular-nums"
             style={{
               color: "var(--golden-yellow)",
               textShadow: "0 0 10px rgba(245,183,49,0.3)",
@@ -886,7 +886,7 @@ export default function HeroStation() {
       {/* ============ HERO CONTENT ============ */}
       <div className="hero-content absolute inset-0 flex flex-col items-center justify-center z-30 text-center px-4 pt-16 pointer-events-none">
         {/* Text Group - translated upward to prevent overlap with train */}
-        <div className="transform -translate-y-12 flex flex-col items-center">
+        <div className="transform -translate-y-24 md:-translate-y-12 flex flex-col items-center">
           <div className="mb-4">
             <h1
               className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight"
@@ -905,10 +905,10 @@ export default function HeroStation() {
 
           {/* Typewriter subtitle */}
           <div
-            className="h-8 md:h-10 flex items-center justify-center"
+            className="h-8 md:h-10 flex items-center justify-center text-center px-2"
           >
             <span
-              className="font-mono text-base md:text-xl tracking-[0.15em] uppercase"
+              className="font-mono text-xs sm:text-base md:text-xl tracking-[0.05em] sm:tracking-[0.15em] uppercase"
               style={{
                 color: "var(--golden-yellow)",
                 textShadow: "0 0 10px rgba(245,183,49,0.3)",
@@ -925,7 +925,7 @@ export default function HeroStation() {
 
 
         {/* CTA Button */}
-        <div className="hero-cta mt-16 md:mt-24">
+        <div className="hero-cta mt-47 md:mt-24">
           <button
             onClick={() => {
               const el = document.getElementById("boarding");

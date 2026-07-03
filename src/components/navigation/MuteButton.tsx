@@ -20,7 +20,7 @@ export default function MuteButton() {
   return (
     <button
       onClick={toggleMute}
-      className="fixed top-6 right-6 z-[100] p-4 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer glass"
+      className="fixed top-4 right-4 md:top-6 md:right-6 z-[100] p-2.5 md:p-4 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer glass"
       style={{
         boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(245, 183, 49, 0.15)",
         background: isMuted ? "rgba(30, 30, 40, 0.45)" : "rgba(245, 183, 49, 0.25)",
@@ -29,7 +29,7 @@ export default function MuteButton() {
       title={isMuted ? "Enable Sound" : "Mute Sound"}
       data-cursor="pointer"
     >
-      <span className="text-xl leading-none transition-transform duration-300 group-hover:scale-110">
+      <span className="text-sm md:text-xl leading-none transition-transform duration-300 group-hover:scale-110">
         {isMuted ? "🔇" : "🎵"}
       </span>
     </button>

@@ -24,26 +24,28 @@ function getCategory(cat: string) {
 
 export default function AchievementStation() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const mobileSwiperRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
 
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        // Sign reveal
-        gsap.from(".achieve-sign", {
-          y: -30,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".achieve-sign",
-            start: "top 85%",
-          },
-        });
+      // Sign reveal
+      gsap.from(".achieve-sign", {
+        y: -30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".achieve-sign",
+          start: "top 85%",
+        },
+      });
 
+      // Desktop staggered animations
+      mm.add("(min-width: 768px)", () => {
         // Cards staggered scale + fade
-        gsap.utils.toArray<HTMLElement>(".achieve-card").forEach((card, i) => {
+        gsap.utils.toArray<HTMLElement>(".achieve-card-desktop").forEach((card, i) => {
           gsap.from(card, {
             y: 40,
             opacity: 0,
@@ -67,10 +69,29 @@ export default function AchievementStation() {
             delay: i * 0.1 + 0.3,
             ease: "back.out(2)",
             scrollTrigger: {
-              trigger: icon.closest(".achieve-card"),
+              trigger: icon.closest(".achieve-card-desktop"),
               start: "top 90%",
             },
           });
+        });
+      });
+
+      // Mobile horizontal scroll section
+      mm.add("(max-width: 767px)", () => {
+        const swiper = mobileSwiperRef.current;
+        if (!swiper) return;
+
+        gsap.to(swiper, {
+          x: () => -(swiper.scrollWidth - swiper.clientWidth),
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            pin: true,
+            scrub: 1,
+            start: "top top",
+            end: () => `+=${swiper.scrollWidth - swiper.clientWidth}`,
+            invalidateOnRefresh: true,
+          },
         });
       });
     },
@@ -81,7 +102,7 @@ export default function AchievementStation() {
     <section
       ref={containerRef}
       id="achievements"
-      className="station-section"
+      className="station-section min-h-screen flex flex-col justify-center"
       style={{
         background: "linear-gradient(180deg, #0F0F1A 0%, #1A1A2E 30%, #12121F 100%)",
       }}
@@ -95,7 +116,7 @@ export default function AchievementStation() {
         }}
       />
 
-      <div className="relative mx-auto max-w-7xl">
+      <div className="relative mx-auto max-w-7xl w-full">
         {/* Station sign */}
         <div className="achieve-sign mb-14 flex justify-center">
           <h2
@@ -118,14 +139,14 @@ export default function AchievementStation() {
           <div className="h-px flex-1" style={{ background: "linear-gradient(90deg, #D4A843, transparent)" }} />
         </div>
 
-        {/* Achievement cards grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* === DESKTOP TIMELINE LAYOUT === */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6">
           {achievements.map((item, i) => {
             const catStyle = getCategory(item.category);
             return (
               <article
                 key={i}
-                className="achieve-card group relative overflow-hidden rounded-xl transition-transform duration-300 hover:scale-[1.03]"
+                className="achieve-card-desktop group relative overflow-hidden rounded-xl transition-transform duration-300 hover:scale-[1.03]"
                 style={{
                   background: "linear-gradient(145deg, rgba(26,26,46,0.8) 0%, rgba(15,15,26,0.9) 100%)",
                   border: "1px solid rgba(212,168,67,0.12)",
@@ -211,6 +232,99 @@ export default function AchievementStation() {
               </article>
             );
           })}
+        </div>
+
+        {/* === MOBILE HORIZONTAL SWIPER LAYOUT === */}
+        <div className="md:hidden overflow-hidden w-full relative">
+          <div
+            ref={mobileSwiperRef}
+            className="flex items-stretch gap-6 pb-6 px-4"
+          >
+            {achievements.map((item, i) => {
+              const catStyle = getCategory(item.category);
+              return (
+                <article
+                  key={i}
+                  className="achieve-card group relative overflow-hidden rounded-xl transition-transform duration-300 hover:scale-[1.03] w-[80vw] shrink-0"
+                  style={{
+                    background: "linear-gradient(145deg, rgba(26,26,46,0.8) 0%, rgba(15,15,26,0.9) 100%)",
+                    border: "1px solid rgba(212,168,67,0.12)",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+                  }}
+                >
+                  {/* Gold shimmer on hover */}
+                  <div
+                    className="pointer-events-none absolute inset-0 -translate-x-full opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100"
+                    aria-hidden="true"
+                    style={{
+                      background: "linear-gradient(90deg, transparent, rgba(212,168,67,0.08), transparent)",
+                      width: "100%",
+                    }}
+                  />
+
+                  {/* Top gold accent line */}
+                  <div
+                    className="h-[2px]"
+                    style={{
+                      background: "linear-gradient(90deg, transparent, #D4A843, transparent)",
+                    }}
+                  />
+
+                  <div className="relative z-10 flex flex-col items-center p-6 text-center h-full justify-between">
+                    <div className="flex flex-col items-center">
+                      {/* Icon */}
+                      <div
+                        className="achieve-icon mb-4 flex h-16 w-16 items-center justify-center rounded-full text-3xl animate-float"
+                        style={{
+                          background: "rgba(212,168,67,0.08)",
+                          border: "2px solid rgba(212,168,67,0.15)",
+                          boxShadow: "0 0 20px rgba(212,168,67,0.1)",
+                        }}
+                      >
+                        {item.icon}
+                      </div>
+
+                      {/* Year */}
+                      <span
+                        className="mb-2 font-mono text-xs font-semibold tracking-wider"
+                        style={{ color: "#D4A843" }}
+                      >
+                        {item.year}
+                      </span>
+
+                      {/* Title */}
+                      <h3
+                        className="mb-3 font-heading text-base font-bold leading-tight"
+                        style={{ color: "#F8F6F0" }}
+                      >
+                        {item.title}
+                      </h3>
+                    </div>
+
+                    {/* Category badge */}
+                    <span
+                      className="inline-block rounded-full px-3 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-widest mt-4"
+                      style={{
+                        background: catStyle.bg,
+                        color: catStyle.text,
+                        border: `1px solid ${catStyle.border}`,
+                      }}
+                    >
+                      {item.category}
+                    </span>
+                  </div>
+
+                  {/* Bottom gold accent */}
+                  <div
+                    className="h-px"
+                    style={{
+                      background: "linear-gradient(90deg, transparent, rgba(212,168,67,0.2), transparent)",
+                    }}
+                  />
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

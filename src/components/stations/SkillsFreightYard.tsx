@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -86,6 +86,14 @@ function WarningStripe() {
 
 export default function SkillsFreightYard() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
+
+  const toggleCategory = (key: string) => {
+    setOpenCategories((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   useGSAP(
     () => {
@@ -245,10 +253,9 @@ export default function SkillsFreightYard() {
                 <div className="absolute right-2 top-2"><Rivet /></div>
                 <div className="absolute bottom-2 left-2"><Rivet /></div>
                 <div className="absolute bottom-2 right-2"><Rivet /></div>
-
-                {/* Container header / lid */}
                 <div
-                  className="container-lid border-b px-5 py-4"
+                  className="container-lid border-b px-5 py-4 cursor-pointer md:cursor-default select-none"
+                  onClick={() => toggleCategory(cat.key)}
                   style={{
                     borderColor: "#3D2E22",
                     background: "linear-gradient(90deg, #C45E2C 0%, #A04B22 100%)",
@@ -264,63 +271,75 @@ export default function SkillsFreightYard() {
                       {cat.label}
                     </h3>
                     <span
-                      className="ml-auto font-mono text-xs"
+                      className="ml-auto font-mono text-xs flex items-center gap-1.5"
                       style={{ color: "rgba(240,236,227,0.6)" }}
                     >
-                      [{items.length}]
+                      <span>[{items.length}]</span>
+                      <span className="md:hidden text-[10px] opacity-70">
+                        {openCategories[cat.key] ? "▲" : "▼"}
+                      </span>
                     </span>
                   </div>
                 </div>
 
-                {/* Metal panel separator */}
-                <WarningStripe />
+                {/* Content wrapper - folded/collapsed on mobile based on state */}
+                <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+                  openCategories[cat.key]
+                    ? "grid-rows-[1fr]"
+                    : "grid-rows-[0fr] group-hover:grid-rows-[1fr] md:grid-rows-[1fr]"
+                }`}>
+                  <div className="overflow-hidden">
+                    {/* Metal panel separator */}
+                    <WarningStripe />
 
-                {/* Skills inside the container */}
-                <div className="space-y-4 p-5">
-                  {items.map((skill) => (
-                    <div key={skill.name}>
-                      <div className="mb-1.5 flex items-center justify-between">
-                        <span
-                          className="font-mono text-sm font-medium"
-                          style={{ color: "#D4BFA6" }}
-                        >
-                          {skill.name}
-                        </span>
-                        <span
-                          className="font-mono text-xs"
-                          style={{ color: "#6B7B8D" }}
-                        >
-                          {skill.level}%
-                        </span>
-                      </div>
-                      <div
-                        className="h-2.5 overflow-hidden rounded-sm"
-                        style={{ background: "#1A1410" }}
-                      >
-                        <div
-                          className="skill-bar-fill h-full rounded-sm"
-                          data-level={skill.level}
-                          style={{
-                            width: "0%",
-                            background: `linear-gradient(90deg, #C45E2C 0%, #E8722A ${skill.level}%)`,
-                            boxShadow: "0 0 8px rgba(196,94,44,0.4)",
-                          }}
-                        />
-                      </div>
+                    {/* Skills inside the container */}
+                    <div className="space-y-4 p-5">
+                      {items.map((skill) => (
+                        <div key={skill.name}>
+                          <div className="mb-1.5 flex items-center justify-between">
+                            <span
+                              className="font-mono text-sm font-medium"
+                              style={{ color: "#D4BFA6" }}
+                            >
+                              {skill.name}
+                            </span>
+                            <span
+                              className="font-mono text-xs"
+                              style={{ color: "#6B7B8D" }}
+                            >
+                              {skill.level}%
+                            </span>
+                          </div>
+                          <div
+                            className="h-2.5 overflow-hidden rounded-sm"
+                            style={{ background: "#1A1410" }}
+                          >
+                            <div
+                              className="skill-bar-fill h-full rounded-sm"
+                              data-level={skill.level}
+                              style={{
+                                width: "0%",
+                                background: `linear-gradient(90deg, #C45E2C 0%, #E8722A ${skill.level}%)`,
+                                boxShadow: "0 0 8px rgba(196,94,44,0.4)",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
 
-                {/* Bottom metal plate */}
-                <div
-                  className="px-5 py-2 text-center font-mono text-[10px] uppercase tracking-widest"
-                  style={{
-                    color: "#4D3D30",
-                    borderTop: "1px solid #3D2E22",
-                    background: "linear-gradient(180deg, #1C1612 0%, #151210 100%)",
-                  }}
-                >
-                  Developer Express Cargo • #{cat.key.toUpperCase()}
+                    {/* Bottom metal plate */}
+                    <div
+                      className="px-5 py-2 text-center font-mono text-[10px] uppercase tracking-widest"
+                      style={{
+                        color: "#4D3D30",
+                        borderTop: "1px solid #3D2E22",
+                        background: "linear-gradient(180deg, #1C1612 0%, #151210 100%)",
+                      }}
+                    >
+                      Developer Express Cargo • #{cat.key.toUpperCase()}
+                    </div>
+                  </div>
                 </div>
               </div>
             );

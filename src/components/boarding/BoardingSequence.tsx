@@ -313,10 +313,10 @@ export default function BoardingSequence() {
               </div>
 
               {/* Divider */}
-              <div className="border-t-2 border-dashed" style={{ borderColor: "#d4c5a0" }} />
+              <div className="hidden sm:block border-t-2 border-dashed" style={{ borderColor: "#d4c5a0" }} />
 
               {/* Journey Route */}
-              <div>
+              <div className="hidden sm:block">
                 <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                   Journey Route
                 </div>

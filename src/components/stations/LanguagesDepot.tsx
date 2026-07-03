@@ -49,7 +49,7 @@ function FlipChar({
 
   return (
     <span
-      className="inline-flex items-center justify-center w-[1.6em] h-[2em] sm:w-[1.8em] sm:h-[2.2em] text-sm sm:text-base md:text-lg font-mono font-bold rounded-[3px] mx-[1px] transition-transform duration-75"
+      className="inline-flex items-center justify-center w-[1.4em] h-[1.8em] sm:w-[1.8em] sm:h-[2.2em] text-xs sm:text-base md:text-lg font-mono font-bold rounded-[3px] mx-[1px] transition-transform duration-75"
       style={{
         background: isFlipping
           ? "linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 49%, #0d0d0d 50%, #1a1a1a 100%)"
@@ -82,7 +82,11 @@ function FlipText({
   return (
     <div className="flex">
       {padded.split("").map((ch, i) => (
-        <span key={i} style={color ? { filter: `drop-shadow(0 0 4px ${color}40)` } : undefined}>
+        <span
+          key={i}
+          className={i >= 8 ? "hidden sm:inline-flex" : "inline-flex"}
+          style={color ? { filter: `drop-shadow(0 0 4px ${color}40)` } : undefined}
+        >
           <FlipChar char={ch} delay={startDelay + i * 30} triggerFlip={triggerFlip} />
         </span>
       ))}
@@ -236,9 +240,8 @@ export default function LanguagesDepot() {
 
           {/* Board Header Row */}
           <div
-            className="grid gap-2 px-4 sm:px-6 py-2"
+            className="grid gap-2 px-4 sm:px-6 py-2 grid-cols-[auto_auto_1fr] sm:grid-cols-[2fr_1.5fr_3fr]"
             style={{
-              gridTemplateColumns: "2fr 1.5fr 3fr",
               borderBottom: "1px solid #222",
             }}
           >
@@ -267,9 +270,8 @@ export default function LanguagesDepot() {
             {languages.map((lang, idx) => (
               <div
                 key={lang.name}
-                className="grid gap-2 px-4 sm:px-6 py-4 items-center transition-colors"
+                className="grid gap-2 px-4 sm:px-6 py-4 items-center transition-colors grid-cols-[auto_auto_1fr] sm:grid-cols-[2fr_1.5fr_3fr]"
                 style={{
-                  gridTemplateColumns: "2fr 1.5fr 3fr",
                   background:
                     idx % 2 === 0
                       ? "rgba(255,255,255,0.01)"

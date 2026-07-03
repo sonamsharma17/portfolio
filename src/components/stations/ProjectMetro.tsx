@@ -67,29 +67,57 @@ export default function ProjectMetro() {
         },
       });
 
-      // Staggered stop dots
-      gsap.from(".metro-stop-dot", {
+      // Desktop: Staggered stop dots
+      gsap.from(".desktop-only .metro-stop-dot", {
         scale: 0,
         opacity: 0,
         duration: 0.5,
         stagger: 0.15,
         ease: "back.out(2)",
         scrollTrigger: {
-          trigger: ".metro-stops-container",
+          trigger: ".metro-stops-container-desktop",
           start: "top 75%",
           toggleActions: "play none none reverse",
         },
       });
 
-      // Staggered project cards
-      gsap.from(".metro-card", {
+      // Desktop: Staggered project cards
+      gsap.from(".desktop-only .metro-card", {
         y: 60,
         opacity: 0,
         duration: 0.7,
         stagger: 0.18,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: ".metro-stops-container",
+          trigger: ".metro-stops-container-desktop",
+          start: "top 70%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      // Mobile: Staggered stop dots
+      gsap.from(".mobile-only .metro-stop-dot", {
+        scale: 0,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.15,
+        ease: "back.out(2)",
+        scrollTrigger: {
+          trigger: ".metro-stops-container-mobile",
+          start: "top 75%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      // Mobile: Staggered project cards
+      gsap.from(".mobile-only .metro-card", {
+        y: 60,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.18,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".metro-stops-container-mobile",
           start: "top 70%",
           toggleActions: "play none none reverse",
         },
@@ -143,10 +171,10 @@ export default function ProjectMetro() {
         </div>
 
         {/* === DESKTOP LAYOUT: Horizontal Metro Line === */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block desktop-only">
           {/* Metro Line */}
           <div className="relative mb-8">
-            <div className="metro-stops-container relative px-8">
+            <div className="metro-stops-container-desktop relative px-8">
               {/* The track line */}
               <div
                 className="metro-line-track absolute top-[18px] left-8 right-8 h-1 rounded-full"
@@ -342,8 +370,8 @@ export default function ProjectMetro() {
         </div>
 
         {/* === MOBILE LAYOUT: Vertical Metro Line === */}
-        <div className="lg:hidden">
-          <div className="metro-stops-container relative pl-12 sm:pl-16">
+        <div className="lg:hidden mobile-only">
+          <div className="metro-stops-container-mobile relative pl-12 sm:pl-16">
             {/* Vertical Track */}
             <div
               className="metro-line-track-vertical absolute left-5 sm:left-7 top-0 bottom-0 w-1 rounded-full"
@@ -363,7 +391,7 @@ export default function ProjectMetro() {
                     onClick={() =>
                       setExpandedIdx(expandedIdx === idx ? null : idx)
                     }
-                    className="metro-stop-dot absolute -left-12 sm:-left-16 top-4 z-10 w-10 h-10 sm:w-11 sm:h-11 rounded-full border-[3px] flex items-center justify-center transition-all duration-300"
+                    className="metro-stop-dot absolute -left-[46px] sm:-left-[56px] top-4 z-10 w-10 h-10 sm:w-11 sm:h-11 rounded-full border-[3px] flex items-center justify-center transition-all duration-300"
                     style={{
                       borderColor:
                         metroLineColors[idx % metroLineColors.length],
@@ -372,7 +400,6 @@ export default function ProjectMetro() {
                           ? metroLineColors[idx % metroLineColors.length]
                           : "var(--metro-dark)",
                       boxShadow: `0 0 16px ${metroLineColors[idx % metroLineColors.length]}50`,
-                      left: "-28px",
                     }}
                     aria-label={`View project: ${project.name}`}
                   >
@@ -391,18 +418,17 @@ export default function ProjectMetro() {
 
                   {/* Horizontal connector */}
                   <div
-                    className="absolute top-[22px] h-px w-6 sm:w-8"
+                    className="absolute top-[22px] h-px -left-[26px] sm:-left-[34px] w-[42px] sm:w-[50px]"
                     style={{
                       background:
                         metroLineColors[idx % metroLineColors.length],
-                      left: "-4px",
                       opacity: 0.5,
                     }}
                   />
 
                   {/* Project Card */}
                   <div
-                    className="metro-card rounded-xl p-5 sm:p-6 ml-4 transition-[border-color,box-shadow] duration-300"
+                    className="metro-card group rounded-xl p-5 sm:p-6 ml-4 transition-[border-color,box-shadow] duration-300"
                     style={{
                       background: "rgba(255,255,255,0.04)",
                       border: `1px solid ${metroLineColors[idx % metroLineColors.length]}30`,
@@ -427,85 +453,93 @@ export default function ProjectMetro() {
                     >
                       {project.name}
                     </h3>
-                    <p
-                      className="text-sm leading-relaxed mb-4"
-                      style={{ color: "rgba(232, 240, 255, 0.6)" }}
-                    >
-                      {project.description}
-                    </p>
+                    {/* Expandable details wrapper - expands on click or hover */}
+                    <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+                      expandedIdx === idx
+                        ? "grid-rows-[1fr]"
+                        : "grid-rows-[0fr] group-hover:grid-rows-[1fr]"
+                    }`}>
+                      <div className="overflow-hidden">
+                        <p
+                          className="text-sm leading-relaxed mb-4 pt-2"
+                          style={{ color: "rgba(232, 240, 255, 0.6)" }}
+                        >
+                          {project.description}
+                        </p>
+                        {/* Tech Stack */}
+                        <div className="flex flex-wrap gap-1.5 mb-3 pt-2">
+                          {project.techStack.map((tech) => (
+                            <span
+                              key={tech}
+                              className="text-[10px] font-mono px-2 py-1 rounded-full"
+                              style={{
+                                background: `${metroLineColors[idx % metroLineColors.length]}15`,
+                                color:
+                                  metroLineColors[idx % metroLineColors.length],
+                                border: `1px solid ${metroLineColors[idx % metroLineColors.length]}30`,
+                              }}
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
 
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-1.5 mb-3">
-                      {project.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-[10px] font-mono px-2 py-1 rounded-full"
+                        {/* Highlights */}
+                        <div
+                          className="pt-3"
                           style={{
-                            background: `${metroLineColors[idx % metroLineColors.length]}15`,
-                            color:
-                              metroLineColors[idx % metroLineColors.length],
-                            border: `1px solid ${metroLineColors[idx % metroLineColors.length]}30`,
+                            borderTop: `1px solid ${metroLineColors[idx % metroLineColors.length]}15`,
                           }}
                         >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                          {project.highlights.map((h) => (
+                            <p
+                              key={h}
+                              className="text-xs mb-1.5 flex items-start gap-1.5"
+                              style={{ color: "rgba(232,240,255,0.7)" }}
+                            >
+                              <span
+                                className="mt-0.5"
+                                style={{
+                                  color:
+                                    metroLineColors[idx % metroLineColors.length],
+                                }}
+                              >
+                                ▸
+                              </span>
+                              {h}
+                            </p>
+                          ))}
+                        </div>
 
-                    {/* Highlights */}
-                    <div
-                      className="pt-3"
-                      style={{
-                        borderTop: `1px solid ${metroLineColors[idx % metroLineColors.length]}15`,
-                      }}
-                    >
-                      {project.highlights.map((h) => (
-                        <p
-                          key={h}
-                          className="text-xs mb-1.5 flex items-start gap-1.5"
-                          style={{ color: "rgba(232,240,255,0.7)" }}
-                        >
-                          <span
-                            className="mt-0.5"
+                        {/* Links */}
+                        <div className="flex gap-3 mt-3 pb-1">
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] font-mono uppercase tracking-wider transition-colors"
                             style={{
-                              color:
-                                metroLineColors[idx % metroLineColors.length],
+                              color: metroLineColors[idx % metroLineColors.length],
                             }}
                           >
-                            ▸
-                          </span>
-                          {h}
-                        </p>
-                      ))}
-                    </div>
-
-                    {/* Links */}
-                    <div className="flex gap-3 mt-3">
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[10px] font-mono uppercase tracking-wider transition-colors"
-                        style={{
-                          color: metroLineColors[idx % metroLineColors.length],
-                        }}
-                      >
-                        ↗ GitHub
-                      </a>
-                      {project.live && project.live !== "#" && (
-                        <a
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[10px] font-mono uppercase tracking-wider transition-colors"
-                          style={{
-                            color:
-                              metroLineColors[idx % metroLineColors.length],
-                          }}
-                        >
-                          ↗ Live
-                        </a>
-                      )}
+                            ↗ GitHub
+                          </a>
+                          {project.live && (
+                            <a
+                              href={project.live}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[10px] font-mono uppercase tracking-wider transition-colors"
+                              style={{
+                                color:
+                                  metroLineColors[idx % metroLineColors.length],
+                              }}
+                            >
+                              ↗ Live
+                            </a>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

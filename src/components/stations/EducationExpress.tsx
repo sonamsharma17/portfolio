@@ -296,7 +296,7 @@ function CardContent({
       </div>
 
       {/* Highlights */}
-      <ul className="space-y-1.5">
+      <ul className="hidden md:block space-y-1.5">
         {entry.highlights.map((h, j) => (
           <li
             key={j}
