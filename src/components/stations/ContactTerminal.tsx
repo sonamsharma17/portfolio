@@ -190,7 +190,7 @@ export default function ContactTerminal() {
         });
       }
 
-      if (WEB3FORMS_ACCESS_KEY === "YOUR_ACCESS_KEY_HERE") {
+      if (WEB3FORMS_ACCESS_KEY === "6e660f52-c962-4689-b4aa-5e0972b65fb5") {
         // Fallback simulation if the key is not set yet
         setTimeout(() => {
           setIsSending(false);
@@ -258,7 +258,7 @@ export default function ContactTerminal() {
               background: "rgba(232, 93, 58, 0.08)",
             }}
           >
-           CONTACT TERMINAL
+            CONTACT TERMINAL
           </div>
         </div>
 
@@ -283,7 +283,7 @@ export default function ContactTerminal() {
                 }}
               >
                 <div className="flex items-center gap-2">
-                  
+
                   <span
                     className="text-xs font-mono tracking-[0.15em] uppercase font-semibold"
                     style={{ color: "var(--sunset-orange)" }}
@@ -570,8 +570,8 @@ export default function ContactTerminal() {
                       className="text-[10px] font-mono transition-colors duration-300"
                       style={{ color: emailCopied && social.platform === "Email" ? "#10B981" : "var(--text-muted)" }}
                     >
-                      {emailCopied && social.platform === "Email" 
-                        ? "Copied to clipboard!" 
+                      {emailCopied && social.platform === "Email"
+                        ? "Copied to clipboard!"
                         : social.label}
                     </p>
                   </div>
@@ -595,7 +595,7 @@ export default function ContactTerminal() {
               }}
             >
               <div className="text-center mb-4">
-                
+
                 <h3
                   className="font-heading font-bold text-lg"
                   style={{ color: "var(--text-primary)" }}
