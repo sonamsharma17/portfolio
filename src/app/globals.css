@@ -1,26 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════════════════
+   DEVELOPER EXPRESS – DESIGN SYSTEM
+   Railway-Themed Portfolio Color Palettes & Typography
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* === Morning Palette (Default/Light) === */
+  --warm-orange: #E8722A;
+  --golden-yellow: #F5B731;
+  --sky-blue: #5BB5E8;
+  --cloud-white: #F4F0EB;
+  --fresh-green: #4CAF50;
+  
+  /* === Freight Yard === */
+  --rust-orange: #C45E2C;
+  --steel-gray: #6B7B8D;
+  --industrial-brown: #5C4033;
+  
+  /* === Education === */
+  --royal-blue: #1A3A8F;
+  --edu-white: #FAFBFF;
+  --edu-silver: #BCC5D3;
+  
+  /* === Metro === */
+  --metro-dark: #0B1426;
+  --neon-cyan: #00E5FF;
+  --metro-purple: #7C3AED;
+  --led-white: #E8F0FF;
+  
+  /* === Hackathon === */
+  --cyber-blue: #00B4D8;
+  --hack-purple: #8B5CF6;
+  --electric-pink: #EC4899;
+  
+  /* === Achievement === */
+  --gold: #D4A843;
+  --royal-black: #1A1A2E;
+  --premium-white: #F8F6F0;
+  
+  /* === Contact === */
+  --sunset-orange: #E85D3A;
+  --dark-navy: #0F172A;
+  --warm-yellow: #FACC15;
+  
+  /* === Core Theme === */
+  --bg-primary: #0C0E1A;
+  --bg-secondary: #111327;
+  --bg-tertiary: #1A1D35;
+  --text-primary: #F0ECE3;
+  --text-secondary: #A8A4B8;
+  --text-muted: #6B6880;
+  --accent: #E8722A;
+  --accent-glow: rgba(232, 114, 42, 0.4);
+  
+  /* === Glass === */
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-hover: rgba(255, 255, 255, 0.12);
+  
+  /* === Shadows === */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+  
+  /* === Transitions === */
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-cinematic: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --bg-primary: #F4F0EB;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #EAE5DC;
+  --text-primary: #1A1A2E;
+  --text-secondary: #4A4A5E;
+  --text-muted: #8A8A9E;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-hover: rgba(255, 255, 255, 0.85);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-accent: var(--accent);
+  --color-accent-glow: var(--accent-glow);
+  --color-warm-orange: var(--warm-orange);
+  --color-golden-yellow: var(--golden-yellow);
+  --color-sky-blue: var(--sky-blue);
+  --color-cloud-white: var(--cloud-white);
+  --color-fresh-green: var(--fresh-green);
+  --color-rust-orange: var(--rust-orange);
+  --color-steel-gray: var(--steel-gray);
+  --color-industrial-brown: var(--industrial-brown);
+  --color-royal-blue: var(--royal-blue);
+  --color-metro-dark: var(--metro-dark);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-metro-purple: var(--metro-purple);
+  --color-cyber-blue: var(--cyber-blue);
+  --color-hack-purple: var(--hack-purple);
+  --color-electric-pink: var(--electric-pink);
+  --color-gold: var(--gold);
+  --color-royal-black: var(--royal-black);
+  --color-premium-white: var(--premium-white);
+  --color-sunset-orange: var(--sunset-orange);
+  --color-dark-navy: var(--dark-navy);
+  --color-warm-yellow: var(--warm-yellow);
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ═══════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════ */
+
+* {
+  cursor: none !important;
+}
+
+@media (pointer: coarse) {
+  * {
+    cursor: auto !important;
   }
 }
 
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scrolling */
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  transition: background 0.6s var(--ease-smooth), color 0.6s var(--ease-smooth);
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.font-railway {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════
+   GLASSMORPHISM UTILITIES
+   ═══════════════════════════════════════ */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════ */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+  50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(232, 114, 42, 0.2); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes drift {
+  0% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(10px) translateY(-5px); }
+  50% { transform: translateX(20px) translateY(0); }
+  75% { transform: translateX(10px) translateY(5px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes steam-rise {
+  0% { 
+    transform: translateY(0) scale(1); 
+    opacity: 0.6; 
+  }
+  100% { 
+    transform: translateY(-80px) scale(2.5); 
+    opacity: 0; 
+  }
+}
+
+@keyframes track-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes signal-blink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+@keyframes typewriter-cursor {
+  0%, 50% { border-right-color: var(--accent); }
+  51%, 100% { border-right-color: transparent; }
+}
+
+@keyframes ink-spread {
+  0% { clip-path: circle(0% at 50% 50%); }
+  100% { clip-path: circle(100% at 50% 50%); }
+}
+
+@keyframes gate-open {
+  0% { transform: perspective(500px) rotateY(0deg); }
+  100% { transform: perspective(500px) rotateY(-90deg); }
+}
+
+@keyframes stamp {
+  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(1.1) rotate(-5deg); opacity: 0.8; }
+  100% { transform: scale(1) rotate(-3deg); opacity: 1; }
+}
+
+@keyframes scan-line {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+/* ═══════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--steel-gray);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ═══════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════
+   TICKET STYLES
+   ═══════════════════════════════════════ */
+
+.ticket-perforation {
+  background-image: radial-gradient(circle, var(--bg-primary) 4px, transparent 4px);
+  background-size: 12px 12px;
+}
+
+.paper-texture {
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Crect width='1' height='1' fill='%23efe9df' x='0' y='0'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════
+   STATION SECTION BASE
+   ═══════════════════════════════════════ */
+
+.station-section {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 2rem;
+}
+
+.station-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.station-sign {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  position: relative;
+  padding: 0.5rem 2rem;
+  border: 3px solid currentColor;
+  background: var(--bg-secondary);
+}
+
+.station-sign::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
 }
